@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+</head>
+<body>
+    <h2>Moje listy</h2>
+    <ul>
+        {% for list in lists.title %}
+            <li>{{ list }}
+            <a href="delete"><button>Usuń</button></a>
+            </li>
+        {% endfor %}
+    </ul>
+        {% block content %}
+        {% endblock %}
+
+<footer>
+    <a href="/add_list"><button>Dodaj Liste</button></a>
+    <a href="/logout"><button>Wyloguj</button></a>
+</footer>
+</body>
+</html>
