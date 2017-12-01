@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views import View
-from .forms import UserCreateForm, UserAuthenticateForm, AddListForm
+from .forms import UserCreateForm, UserAuthenticateForm, AddListForm, AddItemToListForm
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, FormView
 from django.contrib.auth import authenticate, login, logout
@@ -13,7 +13,12 @@ class MainPageView(LoginRequiredMixin, View):
 
     def get(self, request):
         lists = List.objects.all()
-        return render(request, 'base.html', {'lists': lists})
+        items = Item.objects.all()
+        ctx = {
+            "lists": lists,
+            "items": items
+        }
+        return render(request, 'base.html', ctx)
 
 
 class ListView(View):
@@ -66,25 +71,53 @@ class LogoutView(LoginRequiredMixin, View):
 
 
 class AddListView(LoginRequiredMixin, FormView):
-    template_name = 'form.html'
-    form_class = AddListForm
-    success_url = '/main'
 
-    def form_valid(self, form):
-        l = List()
-        l.title = form.cleaned_data['title']
-        l.save()
+    def get(self, request):
+        form = AddListForm()
+        return render(request, 'form.html', {'form': form})
 
-        return super(AddListView, self).form_valid(form)
+    def post(self, request):
+        form = AddListForm(request.POST)
+        if form.is_valid():
+            if request.user.is_authenticated():
+                l = List()
+                l.title = form.cleaned_data['title']
+                l.user_id = request.user.id
+                l.save()
+                return redirect('/main')
 
 
 class DeleteListView(LoginRequiredMixin, View):
 
     def get(self, request, list_id):
-        l = List.objects.get(pk=list_id)
+        l = List.objects.get(pk=list_id, user_id=request.user.id)
         l.delete()
         return redirect('/main')
 
-#
-# class AddItemToListView(LoginRequiredMixin, View):
-#
+
+class AddItemToListView(LoginRequiredMixin, View):
+
+    def get(self, request, list_id):
+        list = List.objects.get(pk=list_id)
+        form = AddItemToListForm()
+        return render(request, 'form.html', {'form': form})
+
+    def post(self, request, list_id):
+        list = List.objects.get(pk=list_id)
+        form = AddItemToListForm(request.POST)
+        if form.is_valid():
+            i = Item()
+            i.title = form.cleaned_data['title']
+            i.priority = form.cleaned_data['priority']
+            i.completed = form.cleaned_data['completed']
+            i.list_id = list.id
+            i.save()
+            return redirect('/main')
+
+
+class DeleteItemFromListView(LoginRequiredMixin, View):
+
+    def get(self, request, item_id):
+        i = Item.objects.get(pk=item_id)
+        i.delete()
+        return redirect('main')

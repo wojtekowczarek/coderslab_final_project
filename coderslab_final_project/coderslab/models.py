@@ -8,18 +8,18 @@ class List(models.Model):
     title = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(User)
 
-    @property
-    def id(self):
-        return '{}'.format(self.user)
-
-    def __str__(self):
-        return self.id
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ['title']
+    # @property
+    # def id(self):
+    #     return '{}'.format(self.user)
+    #
+    # def __str__(self):
+    #     return self.id
+    #
+    # def __str__(self):
+    #     return self.title
+    #
+    # class Meta:
+    #     ordering = ['title']
 
 
 PRIORITY = (
@@ -36,5 +36,5 @@ class Item(models.Model):
     completed = models.BooleanField(default=False)
     list = models.ForeignKey(List)
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title

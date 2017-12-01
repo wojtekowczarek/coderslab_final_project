@@ -8,9 +8,18 @@
 <body>
     <h2>Moje listy</h2>
     <ul>
-        {% for list in lists.title %}
-            <li>{{ list }}
-            <a href="delete"><button>Usuń</button></a>
+        {% for list in lists %}
+            <li>{{ list.title }}
+            <a href="delete/{{ list.id }}"><button>Usuń Listę</button></a>
+            <a href="add_item/{{ list.id }}"><button>Dodaj do listy</button></a>
+                <ul>
+                    {% for item in items %}
+                        {% if item.list_id == list.id %}
+                            <li>{{ item.title }}</li>
+                            <a href="delete_item/{{ item.id }}"><button>Usuń z listy</button></a>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             </li>
         {% endfor %}
     </ul>

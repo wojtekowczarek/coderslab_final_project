@@ -1,5 +1,5 @@
 from django import forms
-# from .models import
+from .models import PRIORITY
 # from django.forms import Form, ModelForm
 # from django.contrib.auth.models import User
 
@@ -24,3 +24,9 @@ class UserAuthenticateForm(forms.Form):
 
 class AddListForm(forms.Form):
     title = forms.CharField(max_length=255)
+
+
+class AddItemToListForm(forms.Form):
+    title = forms.CharField(max_length=255)
+    priority = forms.ChoiceField(PRIORITY)
+    completed = forms.BooleanField()
