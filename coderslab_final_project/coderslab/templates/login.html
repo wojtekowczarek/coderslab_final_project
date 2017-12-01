@@ -3,7 +3,7 @@
 {% block content %}
 
 {% if form.non_field_errors %}
-Błędy: {{ form.non_field_errors }}
+Errors: {{ form.non_field_errors }}
 {% endif %}
 
 <form method="post" action="">
@@ -18,7 +18,7 @@ Błędy: {{ form.non_field_errors }}
 
 {% endfor %}
 
-<button type="submit">ZALOGUJ</button>
+<button type="submit">LOG IN</button>
 
 </form>
 {% endblock %}

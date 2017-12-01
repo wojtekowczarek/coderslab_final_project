@@ -8,19 +8,6 @@ class List(models.Model):
     title = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(User)
 
-    # @property
-    # def id(self):
-    #     return '{}'.format(self.user)
-    #
-    # def __str__(self):
-    #     return self.id
-    #
-    # def __str__(self):
-    #     return self.title
-    #
-    # class Meta:
-    #     ordering = ['title']
-
 
 PRIORITY = (
     (1, 'Low priority'),
@@ -31,10 +18,9 @@ PRIORITY = (
 
 class Item(models.Model):
     title = models.CharField(max_length=255)
+    description = models.TextField()
     created = models.DateTimeField(default=datetime.now())
     priority = models.IntegerField(choices=PRIORITY)
-    completed = models.BooleanField(default=False)
     list = models.ForeignKey(List)
 
-    # def __str__(self):
-    #     return self.title
+

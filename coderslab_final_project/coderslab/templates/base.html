@@ -6,17 +6,18 @@
     <title>TODO List</title>
 </head>
 <body>
-    <h2>Moje listy</h2>
+    <h2>My TODO lists</h2>
     <ul>
         {% for list in lists %}
             <li>{{ list.title }}
-            <a href="delete/{{ list.id }}"><button>Usuń Listę</button></a>
-            <a href="add_item/{{ list.id }}"><button>Dodaj do listy</button></a>
+            <a href="delete/{{ list.id }}"><button>Delete list</button></a>
+            <a href="add_item/{{ list.id }}"><button>Add item to list</button></a>
                 <ul>
                     {% for item in items %}
                         {% if item.list_id == list.id %}
-                            <li>{{ item.title }}</li>
-                            <a href="delete_item/{{ item.id }}"><button>Usuń z listy</button></a>
+                            <li><p>{{ item.title }}<a href="delete_item/{{ item.id }}"><button>Delete from list</button></a></p>
+                                <p>{{ item.description }}</p>
+                            </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -27,8 +28,8 @@
         {% endblock %}
 
 <footer>
-    <a href="/add_list"><button>Dodaj Liste</button></a>
-    <a href="/logout"><button>Wyloguj</button></a>
+    <a href="/add_list"><button>Add list</button></a>
+    <a href="/logout"><button>Logout</button></a>
 </footer>
 </body>
 </html>

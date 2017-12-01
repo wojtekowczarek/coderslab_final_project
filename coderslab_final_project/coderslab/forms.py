@@ -1,7 +1,6 @@
 from django import forms
 from .models import PRIORITY
-# from django.forms import Form, ModelForm
-# from django.contrib.auth.models import User
+
 
 
 class UserCreateForm(forms.Form):
@@ -28,5 +27,5 @@ class AddListForm(forms.Form):
 
 class AddItemToListForm(forms.Form):
     title = forms.CharField(max_length=255)
+    description = forms.CharField(widget=forms.Textarea)
     priority = forms.ChoiceField(PRIORITY)
-    completed = forms.BooleanField()
