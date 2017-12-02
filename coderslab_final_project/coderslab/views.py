@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views import View
 from .forms import UserCreateForm, UserAuthenticateForm, AddListForm, AddItemToListForm
 from django.contrib.auth.models import User
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import FormView
 from django.contrib.auth import authenticate, login, logout
 from .models import List, Item
 
@@ -25,8 +25,12 @@ class ListView(View):
 
     def get(self, request, id):
         list = List.objects.get(pk=id)
-        return render(request, 'list.html', {'list': list},
-                                            {'list_title': list.title})
+        items = Item.objects.all()
+        ctx = {
+            "list": list,
+            "items": items
+        }
+        return render(request, 'list.html', ctx)
 
 
 class RegisterView(FormView):
@@ -109,7 +113,6 @@ class AddItemToListView(LoginRequiredMixin, View):
             i = Item()
             i.title = form.cleaned_data['title']
             i.priority = form.cleaned_data['priority']
-            i.completed = form.cleaned_data['completed']
             i.list_id = list.id
             i.save()
             return redirect('/main')
@@ -120,4 +123,10 @@ class DeleteItemFromListView(LoginRequiredMixin, View):
     def get(self, request, item_id):
         i = Item.objects.get(pk=item_id)
         i.delete()
-        return redirect('main')
+        return redirect('/main')
+
+
+class WelcomeView(View):
+
+    def get(self, request):
+        return render(request, 'main.html')

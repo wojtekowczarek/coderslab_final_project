@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^logout', views.LogoutView.as_view(), name='logout'),
     url(r'^add_list', views.AddListView.as_view(), name='add-list'),
     url(r'^delete/(?P<list_id>(\d)+)', views.DeleteListView.as_view(), name='delete'),
-    url(r'^add_item/(?P<list_id>(\d)+)', views.AddItemToListView.as_view(), name='add-item'),
-    url(r'^delete_item/(?P<item_id>(\d)+)', views.DeleteItemFromListView.as_view(), name='delete-item'),
+    url(r'^list/add_item/(?P<list_id>(\d)+)', views.AddItemToListView.as_view(), name='add-item'),
+    url(r'^list/delete_item/(?P<item_id>(\d)+)', views.DeleteItemFromListView.as_view(), name='delete-item'),
+    url(r'^', views.WelcomeView.as_view(), name='welcome')
 ]

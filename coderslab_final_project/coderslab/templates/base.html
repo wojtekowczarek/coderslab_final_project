@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 
+
     <meta charset="UTF-8">
     <title>TODO List</title>
 </head>
@@ -9,18 +10,8 @@
     <h2>My TODO lists</h2>
     <ul>
         {% for list in lists %}
-            <li>{{ list.title }}
+        <li><a href="/list/{{ list.id }}">{{ list.title }}</a>
             <a href="delete/{{ list.id }}"><button>Delete list</button></a>
-            <a href="add_item/{{ list.id }}"><button>Add item to list</button></a>
-                <ul>
-                    {% for item in items %}
-                        {% if item.list_id == list.id %}
-                            <li><p>{{ item.title }}<a href="delete_item/{{ item.id }}"><button>Delete from list</button></a></p>
-                                <p>{{ item.description }}</p>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
             </li>
         {% endfor %}
     </ul>
@@ -28,8 +19,11 @@
         {% endblock %}
 
 <footer>
+    <p>
+        If you are already logged in:
     <a href="/add_list"><button>Add list</button></a>
     <a href="/logout"><button>Logout</button></a>
+    </p>
 </footer>
 </body>
 </html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>{{ list.title }}</h3>
+<a href="add_item/{{ list.id }}"><button>Add item to list</button></a>
+<ul>
+    {% for item in items %}
+        {% if item.list_id == list.id %}
+            <li><p>{{ item.title }}<a href="delete_item/{{ item.id }}"><button>Delete from list</button></a></p>
+                <p>{{ item.description }}</p>
+                <p>priority: {{ item.priority }}</p>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+<a href="/main"><button>Main page</button></a>
+{% endblock %}

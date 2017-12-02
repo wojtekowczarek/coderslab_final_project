@@ -19,8 +19,7 @@ PRIORITY = (
 class Item(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    created = models.DateTimeField(default=datetime.now())
+    created = models.DateTimeField(auto_now_add=True)
     priority = models.IntegerField(choices=PRIORITY)
     list = models.ForeignKey(List)
-
 
