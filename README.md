@@ -1,4 +1,4 @@
-# coderslab_final_project
+# todo_list
 
 Simple TODO list with following functions:
 - Register user
